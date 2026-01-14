@@ -1,0 +1,32 @@
+classDiagram
+    class Shot {
+      -String mark
+      +mark() String
+      +score() Integer
+    }
+
+    class Frame {
+      -Integer number
+      -Shot first_shot
+      -Shot second_shot
+      -Shot third_shot
+      +number() Integer
+      +first_shot() Shot
+      +second_shot() Shot
+      +score() Integer
+      +strike?() Boolean
+      +spare?() Boolean
+      +foundation?() Boolean
+      +last?() Boolean
+    }
+
+    class Game {
+      -Array~Frame~ frames
+      +score() Integer
+      -calculate_score(frame) Integer
+      -strike_score(frame, next_frame) Integer
+      -spare_score(next_frame) Integer
+    }
+
+    Game "1" *-- "10" Frame
+    Frame "1" *-- "1..3" Shot
