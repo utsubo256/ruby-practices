@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'game'
+
+def parse_shots(input)
+  shots = input.split(',')
+  frames = []
+  9.times do
+    frames << if shots.first == 'X'
+                [shots.shift]
+              else
+                [shots.shift, shots.shift]
+              end
+  end
+  frames << shots
+end
+
+frame_scores = parse_shots(ARGV[0])
+game = Game.new(frame_scores)
+puts game.score
