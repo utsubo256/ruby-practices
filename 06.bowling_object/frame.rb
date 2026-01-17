@@ -13,7 +13,7 @@ class Frame
   end
 
   def score
-    [first_shot.score, second_shot.score, @third_shot.score].sum
+    [first_shot, second_shot, @third_shot].sum(&:score)
   end
 
   def strike?
