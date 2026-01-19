@@ -13,15 +13,16 @@ class Frame
   end
 
   def score(next_frame, next_next_frame)
-    if last?
-      base_score
-    elsif strike?
-      strike_score(next_frame, next_next_frame)
-    elsif spare?
-      spare_score(next_frame)
-    else
-      base_score
-    end
+    bonus_score = if last?
+                    0
+                  elsif strike?
+                    strike_score(next_frame, next_next_frame)
+                  elsif spare?
+                    spare_score(next_frame)
+                  else
+                    0
+                  end
+    base_score + bonus_score
   end
 
   def strike?
@@ -44,16 +45,16 @@ class Frame
 
   def strike_score(next_frame, next_next_frame)
     if foundation?
-      10 + next_frame.first_shot.score + next_frame.second_shot.score
+      next_frame.first_shot.score + next_frame.second_shot.score
     elsif next_frame.strike?
-      20 + next_next_frame.first_shot.score
+      next_frame.base_score + next_next_frame.first_shot.score
     else
-      10 + next_frame.base_score
+      next_frame.base_score
     end
   end
 
   def spare_score(next_frame)
-    10 + next_frame.first_shot.score
+    next_frame.first_shot.score
   end
 
   def foundation?
