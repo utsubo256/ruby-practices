@@ -1,0 +1,44 @@
+classDiagram
+    class Entry {
+      -String name
+      -File::Stat metadata
+      +name() String
+      +mode_permissions() String
+      +nlink() Integer
+      +user() String
+      +group() String
+      +size() Integer
+      +mtime() String
+      +blksize() Integer
+      -mode() String
+      -permissions() String
+    }
+
+    class EntryList {
+      -Hash options
+      -Array~Entry~ entries
+      +display() Nil
+      -filter() Array~Entry~
+      -sort() Array~Entry~
+      -format() Array~String~
+    }
+
+    class Formatter {
+        <<interface>>
+        +format()
+    }
+
+    class DefaultFormatter {
+        -Array~Entry~ entries
+        +format()
+    }
+
+    class LongFormatter {
+        -Array~Entry~ entries
+        +format()
+    }
+
+    EntryList "1" o-- "0..*" Entry
+    EntryList ..> Formatter
+    DefaultFormatter ..|> Formatter
+    LongFormatter ..|> Formatter
