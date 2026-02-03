@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class LongFormatter
-  def initialize(entries)
-    @entries = entries
-  end
+require_relative 'ls_view'
+
+class LongView < LsView
+  private
 
   def format
     max_nlink = @entries.map(&:nlink).max.to_s.size

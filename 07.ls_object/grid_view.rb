@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class DefaultFormatter
+require_relative 'ls_view'
+
+class GridView < LsView
   COLUMN = 3
 
-  def initialize(entries)
-    @entries = entries
-  end
+  private
 
   def format
     entry_names = @entries.map(&:name)

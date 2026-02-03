@@ -1,19 +1,20 @@
 # frozen_string_literal: true
 
 require_relative 'entry'
-require_relative 'default_formatter'
-require_relative 'long_formatter'
+require_relative 'grid_view'
+require_relative 'long_view'
 
-class EntryList
+class LsCommand
   def initialize(options)
     @options = options
     @entries = Dir.entries('.').map { |entry_name| Entry.new(entry_name) }
   end
 
-  def display
+  def execute
     filtered_entries = filter(@entries)
     sorted_entries = sort(filtered_entries)
-    puts format(sorted_entries)
+    ls_view = @options[:l] ? LongView.new(sorted_entries) : GridView.new(sorted_entries)
+    ls_view.display
   end
 
   private
@@ -31,10 +32,5 @@ class EntryList
     end
     sorted_entries = sorted_entries.reverse if @options[:r]
     sorted_entries
-  end
-
-  def format(entries)
-    formatter = @options[:l] ? LongFormatter.new(entries) : DefaultFormatter.new(entries)
-    formatter.format
   end
 end

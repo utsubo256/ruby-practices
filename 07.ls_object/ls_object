@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 require 'optparse'
-require_relative 'entry_list'
+require_relative 'ls_command'
 
 def options
   opt = OptionParser.new
@@ -14,5 +14,5 @@ def options
   params
 end
 
-entries = EntryList.new(options)
-entries.display
+ls_command = LsCommand.new(options)
+ls_command.execute
