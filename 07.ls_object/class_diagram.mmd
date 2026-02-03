@@ -14,31 +14,28 @@ classDiagram
       -permissions() String
     }
 
-    class EntryList {
+    class LsCommand {
       -Hash options
       -Array~Entry~ entries
-      +display() Nil
-      -filter() Array~Entry~
-      -sort() Array~Entry~
-      -format() Array~String~
+      +execute() Nil
+      -filter(entries) Array~Entry~
+      -sort(entries) Array~Entry~
     }
 
-    class Formatter {
-        <<interface>>
-        +format()
-    }
-
-    class DefaultFormatter {
+    class LsView {
         -Array~Entry~ entries
-        +format()
+        +display() Nil
     }
 
-    class LongFormatter {
-        -Array~Entry~ entries
-        +format()
+    class GridView {
+        -format() Array~String~
     }
 
-    EntryList "1" o-- "0..*" Entry
-    EntryList ..> Formatter
-    DefaultFormatter ..|> Formatter
-    LongFormatter ..|> Formatter
+    class LongView {
+        -format() Array~String~
+    }
+
+    LsCommand "1" o-- "0..*" Entry
+    LsCommand ..> LsView
+    GridView ..|> LsView
+    LongView ..|> LsView
