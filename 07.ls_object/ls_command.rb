@@ -13,7 +13,7 @@ class LsCommand
   def execute
     filtered_entries = filter(@entries)
     sorted_entries = sort(filtered_entries)
-    ls_view = @options[:l] ? LongView.new(sorted_entries) : GridView.new(sorted_entries)
+    ls_view = (@options[:l] ? LongView : GridView).new(sorted_entries)
     ls_view.display
   end
 
