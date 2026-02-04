@@ -16,7 +16,7 @@ class GridView < LsView
     aligned_entries = sliced_entry_names.map do |names|
       names.map { |name| name.ljust(names.map(&:size).max + 2) }
     end
-    (column_number - aligned_entries[-1].size).times { aligned_entries[-1] << nil }
+    aligned_entries[-1].size.upto(column_number - 1) { aligned_entries[-1] << nil }
     aligned_entries.transpose.map(&:join)
   end
 end
