@@ -1,0 +1,41 @@
+classDiagram
+    class Entry {
+      -String name
+      -File::Stat metadata
+      +name() String
+      +mode_permissions() String
+      +nlink() Integer
+      +user() String
+      +group() String
+      +size() Integer
+      +mtime() String
+      +blksize() Integer
+      -mode() String
+      -permissions() String
+    }
+
+    class LsCommand {
+      -Hash options
+      -Array~Entry~ entries
+      +execute() Nil
+      -filter(entries) Array~Entry~
+      -sort(entries) Array~Entry~
+    }
+
+    class LsView {
+        -Array~Entry~ entries
+        +display() Nil
+    }
+
+    class GridView {
+        -format() Array~String~
+    }
+
+    class LongView {
+        -format() Array~String~
+    }
+
+    LsCommand "1" o-- "0..*" Entry
+    LsCommand ..> LsView
+    GridView ..|> LsView
+    LongView ..|> LsView
